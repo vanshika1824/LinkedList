@@ -119,6 +119,45 @@ class Solution:
         else:
             print(slow.data,slow.next.data)
 
+    def reversell(self,head):
+        prev = None
+        curr = head
+        while(curr!=None):
+            fast = curr.next
+            curr.next =prev
+            prev = curr
+            curr = fast
+        return prev
+    
+    def reverseKNodes(self,head,k):
+        prev = None
+        curr = head
+        while(curr!=None and k>0):
+            fast = curr.next
+            curr.next = prev
+            prev = curr
+            curr = fast
+            k-=1
+        head.next = fast
+        return prev 
+    
+    def reverseKGroup(self,head,c):
+        if head == None:
+            return None
+        prev = None
+        curr = head
+        fast = None
+        k=c
+        while(curr!=None and k>0):
+            fast = curr.next
+            curr.next = prev
+            prev = curr
+            curr = fast
+            k-=1
+        
+        head.next = self.reverseKGroup(fast,c)
+        return prev 
+
 if __name__ == "__main__":
     s = Solution()
     head = s.createnode(10)
@@ -132,3 +171,12 @@ if __name__ == "__main__":
     s.printlist(head)
     print()
     s.findmiddlenode(head)
+    print()
+    head = s.reversell(head)
+    s.printlist(head)
+    print()
+    head = s.reverseKNodes(head,3)
+    s.printlist(head)
+    print()
+    head = s.reverseKGroup(head,3)
+    s.printlist(head)
